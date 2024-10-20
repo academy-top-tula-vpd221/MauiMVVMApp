@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MauiMVVMApp.MainPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="30"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <VerticalStackLayout Grid.Column="0" Padding="20">
+            <ListView ItemsSource="{Binding FlightsListViewModel.Flights}"
+                      SelectedItem="{Binding FlightsListViewModel.SelectedFlight}"
+                      x:Name="listFlights">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <HorizontalStackLayout>
+                                    <Label Text="{Binding Name}" FontSize="50" Margin="10"/>
+                                    <VerticalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding ToCity}" FontSize="28" Margin="5"/>
+                                            <Label Text="{Binding Passengers}" FontSize="28" Margin="5"/>
+                                        </HorizontalStackLayout>
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Date}" FontSize="20" Margin="5"/>
+                                            <Label Text="{Binding Time}" FontSize="20" Margin="5"/>
+                                        </HorizontalStackLayout>
+                                    </VerticalStackLayout>
+                                </HorizontalStackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Column="2" Padding="20">
+            <Entry Placeholder="Input name" 
+                   Text="{Binding FlightsEditViewModel.Name}"/>
+            <Entry Placeholder="Input city" Text="{Binding FlightsEditViewModel.ToCity}"/>
+            <DatePicker Date="{Binding FlightsEditViewModel.Date}"/>
+            <TimePicker Time="{Binding FlightsEditViewModel.Time}"/>
+            <Entry Placeholder="Input count passengers" Text="{Binding FlightsEditViewModel.Passengers}"/>
+            <HorizontalStackLayout>
+                <Button x:Name="btnAdd"
+                        Text="Add Flight"
+                        Margin="10,0"
+                        Command="{Binding AddCommand}"/>
+                <Button Text="Delete Flight"
+                        Margin="10,0"
+                        Command="{Binding DeleteCommand}"
+                        CommandParameter="{Binding Source={x:Reference Name=listFlights}, Path=SelectedItem}"/>
+                <Button Text="Edit Flight"
+                        Margin="10,0"
+                        Command="{Binding EditCommand}"
+                        CommandParameter="{Binding Source={x:Reference Name=listFlights}, Path=SelectedItem}"/>
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+        
+    </Grid>
+    
+
+</ContentPage>
